@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 export default function Index() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Artiola</Text>
+      <Text style={styles.title}>Artiola & Enis</Text>
       <Text>Platforma: {Platform.OS}</Text>
     </View>
   );
