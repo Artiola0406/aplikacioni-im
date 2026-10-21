@@ -1,51 +1,47 @@
-import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
 import KartaKuizit from "../components/KartaKuizit";
+import { kuizet } from "../data/kuizet";
 
 export default function Index() {
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Enis & Artiola</Text>
-      <Text style={styles.text}>Platforma: {Platform.OS}</Text>
+  const dark = useColorScheme() === "dark";
 
-      <View style={styles.lista}>
-        <KartaKuizit
-          titulli="Bazat e React Native"
-          numriPyetjeve={10}
-          lenda="Zhvillimi i aplikacioneve mobile"
-          statusi="përfunduar"
-          rezultati={80}
-        />
-        <KartaKuizit
-          titulli="Hyrje në TypeScript"
-          numriPyetjeve={8}
-          lenda="Programim"
-          statusi="në progres"
-        />
-        <KartaKuizit
-          titulli="Bazat e të dhënave"
-          numriPyetjeve={15}
-          lenda="Databaza"
-          statusi="i pa filluar"
-        />
-      </View>
-    </ScrollView>
+  return (
+    <View style={[styles.container, { backgroundColor: dark ? "#000" : "#fff" }]}>
+      <FlatList
+        data={kuizet}
+        keyExtractor={(k) => k.id}
+        contentContainerStyle={styles.lista}
+        ListHeaderComponent={
+          <Text style={styles.title}>Enis & Artiola</Text>
+        }
+        // Gjendja bosh: shfaqet kur lista nuk ka asnjë artikull
+        ListEmptyComponent={
+          <Text style={{ color: dark ? "#ccc" : "#333" }}>Nuk ke ende kuize.</Text>
+        }
+        // Komponenti i J2 përdoret për çdo artikull
+        renderItem={({ item }) => (
+          <KartaKuizit
+            titulli={item.titulli}
+            numriPyetjeve={item.numriPyetjeve}
+            lenda={item.lenda}
+            statusi={item.statusi}
+            rezultati={item.rezultati}
+          />
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    alignItems: "center",
-    paddingTop: 60,
-    paddingHorizontal: 16,
-    backgroundColor: "#fff",
-  },
+  container: { flex: 1 },
+  lista: { paddingTop: 60, paddingHorizontal: 16, paddingBottom: 40 },
   title: {
     fontSize: 32,
     fontWeight: "bold",
     color: "red",
-    fontFamily: Platform.OS === "ios" ? "Georgia" : "serif",
+    textAlign: "center",
+    marginBottom: 24,
+    fontFamily: "Georgia",
   },
-  text: { color: "#333", marginBottom: 24 },
-  lista: { width: "100%" },
 });
