@@ -17,7 +17,7 @@ export default function DetajetKuizit() {
   // Gjendja e gabimit: id që nuk ekziston, p.sh. /artikull/x99
   if (!kuizi) {
     return (
-      <View style={[styles.container, { backgroundColor: sfondi }]}>
+      <View style={[styles.gabim, { backgroundColor: sfondi }]}>
         <Stack.Screen options={{ title: "Gabim" }} />
         <Text style={[styles.titulli, { color: tekst }]}>Kuizi nuk u gjet</Text>
         <Text style={{ color: tekstDyte }}>
@@ -34,15 +34,11 @@ export default function DetajetKuizit() {
     >
       <Stack.Screen options={{ title: kuizi.titulli }} />
       <Text style={[styles.titulli, { color: tekst }]}>{kuizi.titulli}</Text>
-      <Text style={[styles.rresht, { color: tekstDyte }]}>
-        Lënda: {kuizi.lenda}
-      </Text>
+      <Text style={[styles.rresht, { color: tekstDyte }]}>Lënda: {kuizi.lenda}</Text>
       <Text style={[styles.rresht, { color: tekstDyte }]}>
         Pyetje: {kuizi.numriPyetjeve}
       </Text>
-      <Text style={[styles.rresht, { color: tekstDyte }]}>
-        Statusi: {kuizi.statusi}
-      </Text>
+      <Text style={[styles.rresht, { color: tekstDyte }]}>Statusi: {kuizi.statusi}</Text>
       {/* Rezultati shfaqet vetëm kur ekziston (0 është vlerë e vlefshme) */}
       {kuizi.rezultati !== undefined && (
         <Text style={[styles.rresht, { color: tekstDyte }]}>
@@ -55,6 +51,7 @@ export default function DetajetKuizit() {
 
 const styles = StyleSheet.create({
   container: { padding: 20 },
+  gabim: { flex: 1, padding: 20 },
   titulli: { fontSize: 26, fontWeight: "bold", marginBottom: 12 },
   rresht: { fontSize: 16, marginBottom: 6 },
 });

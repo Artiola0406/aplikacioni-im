@@ -1,18 +1,19 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from "expo-router";
+import { useColorScheme } from "react-native";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+export default function RootLayout() {
+  const dark = useColorScheme() === "dark";
 
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: dark ? "#000" : "#fff" },
+        headerTintColor: dark ? "#fff" : "#000",
+        headerBackTitle: "Kthehu",
+      }}
+    >
+      {/* Ekrani kryesor ka titullin e vet, ndaj e fshehim kokën */}
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+    </Stack>
   );
 }
