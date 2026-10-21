@@ -1,4 +1,5 @@
-import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { Link } from "expo-router";
+import { FlatList, Pressable, StyleSheet, Text, useColorScheme, View } from "react-native";
 import KartaKuizit from "../components/KartaKuizit";
 import { kuizet } from "../data/kuizet";
 
@@ -18,15 +19,19 @@ export default function Index() {
         ListEmptyComponent={
           <Text style={{ color: dark ? "#ccc" : "#333" }}>Nuk ke ende kuize.</Text>
         }
-        // Komponenti i J2 përdoret për çdo artikull
+        // Çdo kartë është e klikueshme dhe të çon te /artikull/<id>
         renderItem={({ item }) => (
-          <KartaKuizit
-            titulli={item.titulli}
-            numriPyetjeve={item.numriPyetjeve}
-            lenda={item.lenda}
-            statusi={item.statusi}
-            rezultati={item.rezultati}
-          />
+          <Link href={`/artikull/${item.id}`} asChild>
+            <Pressable style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}>
+              <KartaKuizit
+                titulli={item.titulli}
+                numriPyetjeve={item.numriPyetjeve}
+                lenda={item.lenda}
+                statusi={item.statusi}
+                rezultati={item.rezultati}
+              />
+            </Pressable>
+          </Link>
         )}
       />
     </View>
