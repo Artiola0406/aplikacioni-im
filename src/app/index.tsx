@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { FlatList, Pressable, StyleSheet, Text, useColorScheme, View } from "react-native";
-import KartaKuizit from "../components/KartaKuizit";
-import { kuizet } from "../data/kuizet";
+import KartaProduktit from "../components/KartaProduktit";
+import { produktet } from "../data/produktet";
 
 export default function Index() {
   const dark = useColorScheme() === "dark";
@@ -10,16 +10,16 @@ export default function Index() {
   return (
     <View style={[styles.container, { backgroundColor: dark ? "#000" : "#fff" }]}>
       <FlatList
-        data={kuizet}
-        keyExtractor={(k) => k.id}
+        data={produktet}
+        keyExtractor={(p) => p.id}
         contentContainerStyle={styles.lista}
-        ListHeaderComponent={<Text style={styles.title}>Enis & Artiola</Text>}
-        // Gjendja bosh: shfaqet kur lista nuk ka asnjë artikull
+        ListHeaderComponent={<Text style={styles.title}>Menyja</Text>}
         ListEmptyComponent={
-          <Text style={{ color: dark ? "#ccc" : "#333" }}>Nuk ke ende kuize.</Text>
+          <Text style={{ color: dark ? "#ccc" : "#333" }}>
+            Nuk ka produkte në meny.
+          </Text>
         }
         renderItem={({ item }) => (
-          // Pressable e bën kartën të prekshme; onPress hap /artikull/<id>
           <Pressable
             onPress={() =>
               router.push({ pathname: "/artikull/[id]", params: { id: item.id } })
@@ -29,12 +29,12 @@ export default function Index() {
               transform: [{ scale: pressed ? 0.98 : 1 }],
             })}
           >
-            <KartaKuizit
-              titulli={item.titulli}
-              numriPyetjeve={item.numriPyetjeve}
-              lenda={item.lenda}
-              statusi={item.statusi}
-              rezultati={item.rezultati}
+            <KartaProduktit
+              emri={item.emri}
+              pershkrimi={item.pershkrimi}
+              cmimi={item.cmimi}
+              kategoria={item.kategoria}
+              disponueshem={item.disponueshem}
             />
           </Pressable>
         )}
