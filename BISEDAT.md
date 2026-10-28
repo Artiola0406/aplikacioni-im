@@ -14,3 +14,22 @@ Nuk e dija se kur do të vinte ushqimi, sepse nuk kisha mundësi ta ndiqja statu
 
 **Mundësia për projektin tonë:**  
 Kjo përvojë tregon nevojën për një aplikacion të thjeshtë të porositjes së ushqimit, ku klienti mund ta shohë menynë, ta bëjë porosinë, të kontrollojë statusin e saj dhe të marrë informacion për kohën e përafërt të dorëzimit, pa pasur nevojë të kontaktojë vazhdimisht restorantin.
+
+
+
+## Biseda 2 · [DATA] · Klient që porosit ushqim shpesh
+
+**Hera e fundit:**  
+Porositi ushqim me mesazh në Viber. Ushqimi u vonua.
+
+**Si e zgjidhi:**  
+Nuk bëri asgjë. Priti derisa e thirri dërguesi.
+
+**Çka i kushtoi:**  
+Pritje prej mbi 1 orë.
+
+**Çka nuk e dinim:**  
+Nuk dinte ku ishte porosia dhe nëse restoranti e kishte harruar ta bënte. Tha se kjo i ndodh shumë shpesh. Nuk përdor asnjë aplikacion për porosi.
+
+**Mundësia për projektin tonë:**  
+[Shkruaje ti në 1-2 fjali, p.sh. nevoja për ta parë statusin e porosisë pa pritur telefonatën. Kjo është interpretimi juaj, jo i personit.]
