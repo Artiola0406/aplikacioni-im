@@ -14,3 +14,6 @@ Nuk e dija se kur do të vinte ushqimi, sepse nuk kisha mundësi ta ndiqja statu
 
 **Mundësia për projektin tonë:**  
 Kjo përvojë tregon nevojën për një aplikacion të thjeshtë të porositjes së ushqimit, ku klienti mund ta shohë menynë, ta bëjë porosinë, të kontrollojë statusin e saj dhe të marrë informacion për kohën e përafërt të dorëzimit, pa pasur nevojë të kontaktojë vazhdimisht restorantin.
+
+
+
