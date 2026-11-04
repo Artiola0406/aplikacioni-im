@@ -18,6 +18,7 @@ Kjo përvojë tregon nevojën për një aplikacion të thjeshtë të porositjes 
 
 
 
+
 ## Biseda 2 · 28.10.2026 · Student që porosit ushqim gjatë ditës së studimeve
 
 **Hera e fundit:**  
