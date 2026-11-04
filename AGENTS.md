@@ -1,4 +1,11 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+# Projekti: aplikacion për porosi ushqimi
+
+Aplikacion mobil për porosi ushqimi nga një restorant lokal (Skenderaj/Mitrovicë). Klienti e shikon menynë, e shton produktin në shportë, bën porosinë (pagesë me para në dorë) dhe e ndjek statusin deri në dorëzim.
+
+- Puna e vetme: klienti bën një porosi nga menyja deri në dorëzim dhe e sheh statusin pa telefonuar restorantin.
+- Stack: Expo SDK 58, Expo Router (rrugët në src/app), TypeScript, Supabase (Postgres, Auth, RLS).
+- Gjuha e ndërfaqes: shqip. Në tabela përdoren emra anglisht (products, orders).
+- Rregull: ndrysho vetëm çfarë kërkohet, mos instalo biblioteka pa nevojë, mos vendos çelësa në kod.
 
 ## Expo has changed — do not trust your training data
 
