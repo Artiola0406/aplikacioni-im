@@ -1,4 +1,21 @@
 # Projekti: aplikacion për porosi ushqimi
+- Qëllimi: aplikacion mobil për porosi ushqimi nga restorant lokal në Skenderaj/Mitrovicë; klienti shfleton menynë, porosit me para në dorë dhe ndjek statusin deri në dorëzim.
+- Puna e vetme: klienti bën një porosi nga menyja deri në dorëzim dhe e sheh statusin pa telefonuar restorantin.
+- Stack: Expo SDK 58, Expo Router, TypeScript dhe Supabase; pakot kryesore janë në versionet e SDK 58, por `expo install --check` gjeti 13 paketa me versione jashtë pritshmërive.
+- Struktura: rrugët në `src/app`, komponentët në `src/components`, klienti Supabase në `src/lib/supabase.ts`.
+- Tabela aktuale në Supabase: products (id, name, description, price, category, is_available).
+- Statusi i projektit: M0 është pjesërisht i përfunduar: AGENTS.md është i gjurmuar dhe përshkruan projektin/stack-un, por `src/app/IDETE.md` ende ka mbetje të idesë së kuizit. M1: klienti Supabase përdor çelës publishable; listimi, detajet dhe shtimi i produkteve përdorin tabelën `products` me fushat e kërkuara. Mbeten mospërputhjet e versioneve të 13 paketave, gabimet e TypeScript, lint-i i paverifikuar dhe përjashtimi i `.env` nga Git; insert-i anon është vetëm demo dhe RLS nuk u verifikua.
+- Çfarë është JASHTË MVP-së: paneli web, harta me korrier, GPS real, pagesat online, njoftimet push.
+
+## Agjenti
+- Agjenti që punon në këtë projekt: Cursor (modaliteti Agent).
+- Si punon: lexon AGENTS.md para çdo detyre; ndryshon vetëm skedarët që kërkohen; nuk instalon paketa pa nevojë; para çdo ndryshimi që prek Expo lexon dokumentacionin e SDK 58.
+- Siguria: asnjëherë nuk vendos çelësa ose fjalëkalime në kod ose në Git; .env.local mbetet jashtë repository-t; përdoret vetëm çelësi publishable i Supabase.
+- Rrjedha e punës: një ndryshim i vogël → testim në telefon → përdoruesja lexon diff-in → commit nga përdoruesja.
+- Komandat në Windows: npx.cmd, npm.cmd. Para çdo detyre të përfunduar: npx.cmd tsc --noEmit dhe npx.cmd expo lint.
+- Rregulla për ndarjen e punës: ky projekt kryhet nga dy studentë; mos ndrysho pjesën e tjetrit pa u njoftuar.
+
+# Projekti: aplikacion për porosi ushqimi
 
 Aplikacion mobil për porosi ushqimi nga një restorant lokal (Skenderaj/Mitrovicë). Klienti e shikon menynë, e shton produktin në shportë, bën porosinë (pagesë me para në dorë) dhe e ndjek statusin deri në dorëzim.
 
