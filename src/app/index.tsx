@@ -1,5 +1,5 @@
-import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -28,24 +28,38 @@ export default function Index() {
   const [duke_ngarkuar, setDukeNgarkuar] = useState(true);
   const [gabimi, setGabimi] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function ngarko() {
-      const { data, error } = await supabase.from("products").select();
-      if (error) {
-        setGabimi(error.message);
-      } else {
-        setProduktet(data ?? []);
+  // Ngarkon produktet sa herë që ekrani bëhet aktiv (edhe pas shtimit të një produkti)
+  useFocusEffect(
+    useCallback(() => {
+      let aktiv = true;
+      async function ngarko() {
+        const { data, error } = await supabase
+          .from("products")
+          .select()
+          .order("category", { ascending: true })
+          .order("name", { ascending: true });
+        if (!aktiv) return;
+        if (error) {
+          setGabimi(error.message);
+        } else {
+          setGabimi(null);
+          setProduktet(data ?? []);
+        }
+        setDukeNgarkuar(false);
       }
-      setDukeNgarkuar(false);
-    }
-    ngarko();
-  }, []);
+      ngarko();
+      return () => {
+        aktiv = false;
+      };
+    }, [])
+  );
 
   const tekst = dark ? "#ccc" : "#333";
+  const background = dark ? "#000" : "#fff";
 
   if (duke_ngarkuar) {
     return (
-      <View style={[styles.qendra, { backgroundColor: dark ? "#000" : "#fff" }]}>
+      <View style={[styles.qendra, { backgroundColor: background }]}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -53,19 +67,29 @@ export default function Index() {
 
   if (gabimi) {
     return (
-      <View style={[styles.qendra, { backgroundColor: dark ? "#000" : "#fff" }]}>
+      <View style={[styles.qendra, { backgroundColor: background }]}>
         <Text style={{ color: tekst }}>Gabim në ngarkim: {gabimi}</Text>
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: dark ? "#000" : "#fff" }]}>
+    <View style={[styles.container, { backgroundColor: background }]}>
       <FlatList
         data={produktet}
         keyExtractor={(p) => p.id}
         contentContainerStyle={styles.lista}
-        ListHeaderComponent={<Text style={styles.title}>Menyja</Text>}
+        ListHeaderComponent={
+          <View>
+            <Text style={styles.title}>Menyja</Text>
+            <Pressable
+              onPress={() => router.push("/shto-produkt")}
+              style={({ pressed }) => [styles.butoniShto, { opacity: pressed ? 0.7 : 1 }]}
+            >
+              <Text style={styles.butoniShtoTekst}>+ Shto produkt</Text>
+            </Pressable>
+          </View>
+        }
         ListEmptyComponent={<Text style={{ color: tekst }}>Nuk ka produkte në meny.</Text>}
         renderItem={({ item }) => (
           <Pressable
@@ -100,7 +124,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "red",
     textAlign: "center",
-    marginBottom: 24,
+    marginBottom: 16,
     fontFamily: "Georgia",
   },
+  butoniShto: {
+    backgroundColor: "#dc2626",
+    padding: 12,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  butoniShtoTekst: { color: "#fff", fontWeight: "bold", fontSize: 16 },
 });
