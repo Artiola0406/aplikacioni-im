@@ -1,11 +1,12 @@
-import { Link, router } from 'expo-router';
+import { Link } from 'expo-router';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import ButoniDil from '@/auth/ButoniDil';
 import { useAuth } from '@/context/auth-context';
 
 export default function ProfileScreen() {
-  const { isGuest, userEmail, signOut } = useAuth();
+  const { userEmail } = useAuth();
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -13,33 +14,19 @@ export default function ProfileScreen() {
         <Text style={styles.title}>Profili</Text>
         <View style={styles.card}>
           <Text style={styles.label}>Statusi</Text>
-          <Text style={styles.value}>{isGuest ? 'Vizitor' : userEmail ?? 'Përdorues'}</Text>
+          <Text style={styles.value}>{userEmail ?? 'Përdorues'}</Text>
         </View>
 
         <Pressable
           style={styles.action}
-          onPress={() => {
-            if (isGuest) {
-              Alert.alert('Së shpejti', 'Regjistrimi për vizitor do të vjen në versionin e ardhshëm.');
-              return;
-            }
-            Alert.alert('Së shpejti', 'Profili do të jetë i plotësuar më vonë.');
-          }}
+          onPress={() => Alert.alert('Së shpejti', 'Profili do të jetë i plotësuar më vonë.')}
         >
           <Text style={styles.actionText}>Ndrysho profilin</Text>
         </Pressable>
 
         <Link href="/meny-supabase" style={styles.link}>Menyja me Supabase (version testimi)</Link>
 
-        <Pressable
-          onPress={() => {
-            signOut();
-            router.replace('/login');
-          }}
-          style={styles.logoutButton}
-        >
-          <Text style={styles.logoutText}>Dil</Text>
-        </Pressable>
+        <ButoniDil />
       </View>
     </SafeAreaView>
   );
@@ -55,6 +42,4 @@ const styles = StyleSheet.create({
   action: { backgroundColor: '#fff', borderRadius: 16, padding: 16, marginBottom: 12 },
   actionText: { fontSize: 16, fontWeight: '700', color: '#111827' },
   link: { color: '#EE6C3A', fontWeight: '700', marginTop: 8, marginBottom: 20 },
-  logoutButton: { marginTop: 'auto', backgroundColor: '#111827', borderRadius: 14, paddingVertical: 14, alignItems: 'center' },
-  logoutText: { color: '#fff', fontWeight: '800' },
 });

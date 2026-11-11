@@ -10,6 +10,7 @@ import {
   useColorScheme,
 } from "react-native";
 import { supabase } from "../lib/supabase";
+import { shpjegoGabiminSupabase } from "../auth/hyrja";
 
 export default function ShtoProdukt() {
   const dark = useColorScheme() === "dark";
@@ -49,7 +50,7 @@ export default function ShtoProdukt() {
     setDukeRuajtur(false);
 
     if (error) {
-      Alert.alert("Nuk u ruajt", error.message);
+      Alert.alert("Nuk u ruajt", shpjegoGabiminSupabase(error.message));
       return;
     }
 

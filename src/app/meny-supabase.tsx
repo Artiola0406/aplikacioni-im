@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 
 import KartaProduktit from '../components/KartaProduktit';
+import ButoniDil from '../auth/ButoniDil';
+import { shpjegoGabiminSupabase } from '../auth/hyrja';
 import { supabase } from '../lib/supabase';
 
 type ProduktDB = {
@@ -40,7 +42,7 @@ export default function SupabaseMenuScreen() {
           .order('name', { ascending: true });
         if (!aktiv) return;
         if (error) {
-          setGabimi(error.message);
+          setGabimi(shpjegoGabiminSupabase(error.message));
         } else {
           setGabimi(null);
           setProduktet(data ?? []);
@@ -59,22 +61,35 @@ export default function SupabaseMenuScreen() {
 
   if (dukeNgarkuar) {
     return (
-      <View style={[styles.qendra, { backgroundColor: background }]}>
-        <ActivityIndicator size="large" />
+      <View style={[styles.container, { backgroundColor: background }]}>
+        <View style={styles.signOut}>
+          <ButoniDil style={styles.signOutButton} />
+        </View>
+        <View style={styles.qendra}>
+          <ActivityIndicator size="large" />
+        </View>
       </View>
     );
   }
 
   if (gabimi) {
     return (
-      <View style={[styles.qendra, { backgroundColor: background }]}>
-        <Text style={{ color: tekst }}>Gabim në ngarkim: {gabimi}</Text>
+      <View style={[styles.container, { backgroundColor: background }]}>
+        <View style={styles.signOut}>
+          <ButoniDil style={styles.signOutButton} />
+        </View>
+        <View style={styles.qendra}>
+          <Text style={{ color: tekst }}>Gabim në ngarkim: {gabimi}</Text>
+        </View>
       </View>
     );
   }
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
+      <View style={styles.signOut}>
+        <ButoniDil style={styles.signOutButton} />
+      </View>
       <FlatList
         data={produktet}
         keyExtractor={item => item.id}
@@ -114,6 +129,8 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   qendra: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
   lista: { paddingTop: 60, paddingHorizontal: 16, paddingBottom: 40 },
+  signOut: { alignItems: 'flex-end', paddingHorizontal: 16, paddingTop: 12 },
+  signOutButton: { marginTop: 0, paddingHorizontal: 20, minWidth: 76 },
   title: {
     fontSize: 32,
     fontWeight: 'bold',

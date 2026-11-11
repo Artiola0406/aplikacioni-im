@@ -1,6 +1,7 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, useColorScheme } from "react-native";
+import { shpjegoGabiminSupabase } from "../../auth/hyrja";
 import { supabase } from "../../lib/supabase";
 
 type ProduktDB = {
@@ -30,7 +31,7 @@ export default function DetajetProduktit() {
         .select()
         .eq("id", id)
         .maybeSingle();
-      if (error) setGabimi(error.message);
+      if (error) setGabimi(shpjegoGabiminSupabase(error.message));
       else setProdukt(data);
       setDukeNgarkuar(false);
     }

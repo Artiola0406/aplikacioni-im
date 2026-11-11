@@ -1,4 +1,4 @@
-import { Link, router } from 'expo-router';
+import { Link, Redirect } from 'expo-router';
 import { useState } from 'react';
 import {
   Alert,
@@ -13,10 +13,11 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useAuth } from '@/context/auth-context';
+import { regjistrohu } from '@/auth/hyrja';
+import { useSesioni } from '@/auth/sesioni';
 
 export default function RegisterScreen() {
-  const { signUp } = useAuth();
+  const { session } = useSesioni();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,13 +25,13 @@ export default function RegisterScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!fullName.trim()) {
       Alert.alert('Gabim', 'Shkruaj emrin e plotë.');
       return;
     }
-    if (!email.trim()) {
-      Alert.alert('Gabim', 'Email-i është i detyrueshëm.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      Alert.alert('Gabim', 'Shkruaj një adresë emaili të vlefshme.');
       return;
     }
     if (password.length < 6) {
@@ -43,17 +44,26 @@ export default function RegisterScreen() {
     }
 
     setSubmitting(true);
-    const ok = signUp(email, password);
-    setTimeout(() => {
-      if (ok) {
-        Alert.alert('Sukses', 'Regjistrimi u krye me sukses.');
-        router.replace('/(tabs)/home');
+    try {
+      const result = await regjistrohu(email.trim(), password, fullName.trim());
+      if (!result.ok) {
+        Alert.alert('Gabim', result.error);
+      } else if (!result.data) {
+        Alert.alert(
+          'Konfirmimi i emailit',
+          'Konfirmimi me email është ende i aktivizuar në Supabase'
+        );
       } else {
-        Alert.alert('Gabim', 'Regjistrimi nuk u krye. Provo përsëri.');
+        Alert.alert('Sukses', 'Llogaria u krijua me sukses.');
       }
+    } finally {
       setSubmitting(false);
-    }, 400);
+    }
   };
+
+  if (session) {
+    return <Redirect href="/(tabs)/home" />;
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>

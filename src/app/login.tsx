@@ -1,4 +1,4 @@
-import { Link, router } from 'expo-router';
+import { Link, Redirect } from 'expo-router';
 import { useState } from 'react';
 import {
   Alert,
@@ -8,42 +8,20 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useAuth } from '@/context/auth-context';
+import HyrjaForm from '@/auth/hyrja.tsx';
+import { useSesioni } from '@/auth/sesioni';
 
 export default function LoginScreen() {
-  const { signIn, continueAsGuest } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const { session } = useSesioni();
   const [rememberMe, setRememberMe] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
 
-  const handleLogin = () => {
-    if (!email.trim()) {
-      Alert.alert('Gabim', 'Email ose telefon është i detyrueshëm.');
-      return;
-    }
-    if (password.length < 6) {
-      Alert.alert('Gabim', 'Fjalëkalimi duhet të jetë të paktën 6 karaktere.');
-      return;
-    }
-
-    setSubmitting(true);
-    const ok = signIn(email, password);
-    setTimeout(() => {
-      if (ok) {
-        router.replace('/(tabs)/home');
-      } else {
-        Alert.alert('Gabim', 'Të dhënat nuk janë valide.');
-      }
-      setSubmitting(false);
-    }, 400);
-  };
+  if (session) {
+    return <Redirect href="/(tabs)/home" />;
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -51,54 +29,21 @@ export default function LoginScreen() {
         <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
           <View style={styles.hero}>
             <View style={styles.heroBubble}><Text style={styles.heroEmoji}>🍕</Text></View>
-            <Text style={styles.title}>Mirë se u ktheve</Text>
-            <Text style={styles.subtitle}>Hyr dhe vazhdo aty ku e le.</Text>
+            <Text style={styles.title}>Mirë se erdhe</Text>
           </View>
 
           <View style={styles.card}>
-            <View style={styles.field}>
-              <Text style={styles.label}>Email ose telefon</Text>
-              <View style={styles.inputWrap}>
-                <Text style={styles.icon}>✉️</Text>
-                <TextInput
-                  value={email}
-                  onChangeText={setEmail}
-                  placeholder="example@email.com"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  style={styles.input}
-                />
-              </View>
-            </View>
-
-            <View style={styles.field}>
-              <Text style={styles.label}>Fjalëkalimi</Text>
-              <View style={styles.inputWrap}>
-                <Text style={styles.icon}>🔒</Text>
-                <TextInput
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="••••••••"
-                  secureTextEntry={!showPassword}
-                  style={styles.input}
-                />
-                <Pressable onPress={() => setShowPassword(v => !v)} style={styles.eyeButton}>
-                  <Text style={styles.eyeText}>{showPassword ? '🙈' : '👁️'}</Text>
-                </Pressable>
-              </View>
-            </View>
-
-            <View style={styles.rowBetween}>
-              <Pressable onPress={() => setRememberMe(v => !v)} style={styles.checkboxRow}>
-                <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
-                <Text style={styles.checkText}>Më mbaj të kyçur</Text>
-              </Pressable>
-              <Link href="/register" style={styles.linkText}>Harrove fjalëkalimin?</Link>
-            </View>
-
-            <Pressable onPress={handleLogin} disabled={submitting} style={[styles.primaryButton, submitting && styles.disabledButton]}>
-              <Text style={styles.primaryButtonText}>{submitting ? 'Duke hyrë...' : 'Hyr'}</Text>
-            </Pressable>
+            <HyrjaForm
+              beforeSubmit={
+                <View style={styles.rowBetween}>
+                  <Pressable onPress={() => setRememberMe(value => !value)} style={styles.checkboxRow}>
+                    <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
+                    <Text style={styles.checkText}>Më mbaj të kyçur</Text>
+                  </Pressable>
+                  <Link href="/register" style={styles.linkText}>Harrove fjalëkalimin?</Link>
+                </View>
+              }
+            />
 
             <View style={styles.dividerRow}>
               <View style={styles.line} />
@@ -121,10 +66,7 @@ export default function LoginScreen() {
             </Text>
 
             <Pressable
-              onPress={() => {
-                continueAsGuest();
-                router.replace('/(tabs)/home');
-              }}
+              onPress={() => Alert.alert('Hyrja kërkohet për të vazhduar')}
               style={styles.visitorLink}
             >
               <Text style={styles.linkText}>Shfleto si vizitor →</Text>
@@ -165,21 +107,6 @@ const styles = StyleSheet.create({
     shadowRadius: 18,
     elevation: 8,
   },
-  field: { marginBottom: 18 },
-  label: { fontSize: 15, fontWeight: '600', color: '#374151', marginBottom: 8 },
-  inputWrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    borderRadius: 16,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: '#EEE',
-  },
-  icon: { fontSize: 18, marginRight: 8 },
-  input: { flex: 1, fontSize: 16, paddingVertical: 14, color: '#111827' },
-  eyeButton: { padding: 6 },
-  eyeText: { fontSize: 18 },
   rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 },
   checkboxRow: { flexDirection: 'row', alignItems: 'center' },
   checkbox: {
@@ -193,14 +120,6 @@ const styles = StyleSheet.create({
   checkboxChecked: { backgroundColor: '#EE6C3A', borderColor: '#EE6C3A' },
   checkText: { color: '#374151', fontSize: 13 },
   linkText: { color: '#EE6C3A', fontSize: 13, fontWeight: '700' },
-  primaryButton: {
-    backgroundColor: '#EE6C3A',
-    paddingVertical: 16,
-    borderRadius: 18,
-    alignItems: 'center',
-    marginBottom: 18,
-  },
-  primaryButtonText: { color: '#fff', fontWeight: '800', fontSize: 16 },
   dividerRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 18 },
   line: { flex: 1, height: 1, backgroundColor: '#E5E7EB' },
   orText: { color: '#6B7280', paddingHorizontal: 12, fontSize: 12 },
@@ -216,5 +135,4 @@ const styles = StyleSheet.create({
   signupText: { textAlign: 'center', marginTop: 22, color: '#374151' },
   highlightText: { color: '#EE6C3A', fontWeight: '800' },
   visitorLink: { marginTop: 12, alignItems: 'center' },
-  disabledButton: { opacity: 0.6 },
 });

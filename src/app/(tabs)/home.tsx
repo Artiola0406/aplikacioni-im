@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import ButoniDil from '@/auth/ButoniDil';
 import RestaurantCard from '@/components/RestaurantCard';
 import { restaurants } from '@/data/restaurants';
 
@@ -34,6 +35,9 @@ export default function RestaurantsScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <View style={styles.accountActions}>
+          <ButoniDil style={styles.signOutButton} />
+        </View>
         <View style={styles.headerRow}>
           <Text style={styles.title}>Restorantet pranë teje</Text>
           <Pressable style={styles.menuButton}><Text style={styles.menuButtonText}>⋯</Text></Pressable>
@@ -78,6 +82,8 @@ export default function RestaurantsScreen() {
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#F4F4F6' },
   content: { paddingHorizontal: 18, paddingTop: 24, paddingBottom: 110 },
+  accountActions: { alignItems: 'flex-end', marginBottom: 12 },
+  signOutButton: { marginTop: 0, backgroundColor: '#111827', paddingHorizontal: 20, minWidth: 76 },
   headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   title: { fontSize: 30, fontWeight: '800', color: '#111827', textAlign: 'center', flex: 1 },
   menuButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', marginLeft: 12 },
