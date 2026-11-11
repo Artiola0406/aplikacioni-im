@@ -1,11 +1,11 @@
 # Projekti: aplikacion për porosi ushqimi
 - Qëllimi: aplikacion mobil për porosi ushqimi nga restorant lokal në Skenderaj/Mitrovicë; klienti shfleton menynë, porosit me para në dorë dhe ndjek statusin deri në dorëzim.
 - Puna e vetme: klienti bën një porosi nga menyja deri në dorëzim dhe e sheh statusin pa telefonuar restorantin.
-- Stack: Expo SDK 58, Expo Router, TypeScript dhe Supabase; pakot kryesore janë në versionet e SDK 58, por `expo install --check` gjeti 13 paketa me versione jashtë pritshmërive.
+- Stack: Expo SDK 58, Expo Router, TypeScript dhe Supabase.
 - Struktura: rrugët në `src/app`, komponentët në `src/components`, klienti Supabase në `src/lib/supabase.ts`.
 - Tabela aktuale në Supabase: products (id, name, description, price, category, is_available).
-- Statusi i projektit: M0 është pjesërisht i përfunduar: AGENTS.md është i gjurmuar dhe përshkruan projektin/stack-un, por `src/app/IDETE.md` ende ka mbetje të idesë së kuizit. M1: klienti Supabase përdor çelës publishable; listimi, detajet dhe shtimi i produkteve përdorin tabelën `products` me fushat e kërkuara. Mbeten mospërputhjet e versioneve të 13 paketave, gabimet e TypeScript, lint-i i paverifikuar dhe përjashtimi i `.env` nga Git; insert-i anon është vetëm demo dhe RLS nuk u verifikua.
-- Çfarë është JASHTË MVP-së: paneli web, harta me korrier, GPS real, pagesat online, njoftimet push.
+- Statusi i projektit: M0 është pjesërisht i përfunduar: AGENTS.md dhe dokumentacioni rrënjës janë të gjurmuar, por mbetet mbetje e idesë së kuizit në `src/app/IDETE.md`. M1 është pjesërisht i përfunduar: klienti Supabase përdor çelës publishable dhe listimi, detajet dhe shtimi i produkteve përdorin tabelën `products`; versionet e paketa/Expo dhe lint-i mbeten të pafunduar, dhe insert-i anon është vetëm demo.
+- Çfarë është JASHTË MVP-së: paneli web, harta me korrier, GPS real, pagesa online, njoftimet push.
 
 ## Agjenti
 - Agjenti që punon në këtë projekt: Cursor (modaliteti Agent).
