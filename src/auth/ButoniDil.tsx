@@ -5,7 +5,13 @@ import { Alert, Pressable, StyleSheet, Text, type StyleProp, type ViewStyle } fr
 
 import { dil } from './hyrja';
 
-export default function ButoniDil({ style }: { style?: StyleProp<ViewStyle> }) {
+export default function ButoniDil({
+  style,
+  confirm = false,
+}: {
+  style?: StyleProp<ViewStyle>;
+  confirm?: boolean;
+}) {
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSignOut() {
@@ -20,9 +26,24 @@ export default function ButoniDil({ style }: { style?: StyleProp<ViewStyle> }) {
     }
   }
 
+  function handlePress() {
+    if (!confirm) {
+      void handleSignOut();
+      return;
+    }
+    Alert.alert(
+      'Je i sigurt?',
+      'A dëshironi të dilni nga llogaria?',
+      [
+        { text: 'Anulo', style: 'cancel' },
+        { text: 'Dil', style: 'destructive', onPress: () => void handleSignOut() },
+      ]
+    );
+  }
+
   return (
     <Pressable
-      onPress={handleSignOut}
+      onPress={handlePress}
       disabled={submitting}
       style={[styles.button, submitting && styles.disabled, style]}
     >

@@ -20,7 +20,7 @@ export default function RestaurantCard({ restaurant, onPress }: Props) {
         </View>
         <Text style={styles.meta}>{restaurant.cuisine.join(' · ')}</Text>
         <View style={styles.infoRow}>
-          <Text style={styles.offer}>-{restaurant.discount}% OFF</Text>
+          <Text style={styles.offer}>-{restaurant.discount}% ZBRITJE</Text>
           <Text style={styles.rating}>★ {restaurant.rating} ({restaurant.reviews})</Text>
         </View>
         <View style={styles.bottomRow}>

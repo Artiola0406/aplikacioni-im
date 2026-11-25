@@ -10,7 +10,7 @@ import { restaurants } from '@/data/restaurants';
 import { useCart } from '@/context/cart-context';
 import type { MenuItem } from '@/types';
 
-type CategoryChip = 'Të gjitha' | 'Pica klasike' | 'Pica speciale' | 'Pije' | 'Sallata' | 'Burger' | 'Sidet' | 'Pasta' | 'Roll' | 'Nigiri' | 'Supa';
+type CategoryChip = 'Të gjitha' | 'Pizza klasike' | 'Pizza speciale' | 'Pije' | 'Sallata' | 'Burger' | 'Sidet' | 'Pasta' | 'Roll' | 'Nigiri' | 'Supa';
 
 export default function RestaurantMenuScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -58,7 +58,7 @@ export default function RestaurantMenuScreen() {
             <Pressable onPress={() => router.back()} style={styles.circleButton}><Text style={styles.circleText}>←</Text></Pressable>
             <Pressable onPress={() => setLiked(v => !v)} style={styles.circleButton}><Text style={styles.circleText}>{liked ? '♥' : '♡'}</Text></Pressable>
           </View>
-          <View style={styles.heroBadge}><Text style={styles.heroBadgeText}>-{restaurant.discount}% OFF</Text></View>
+          <View style={styles.heroBadge}><Text style={styles.heroBadgeText}>-{restaurant.discount}% ZBRITJE</Text></View>
           <View style={styles.heroTextWrap}>
             <Text style={styles.name}>{restaurant.name}</Text>
             <Text style={styles.tags}>{restaurant.cuisine.join(' · ')}</Text>

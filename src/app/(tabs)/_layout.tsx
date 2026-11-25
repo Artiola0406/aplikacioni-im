@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { useCart } from '@/context/cart-context';
 
@@ -35,21 +35,21 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24, color }}>{color === '#111827' ? '🏠' : '🏠'}</Text>,
+          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={typeof color === 'string' ? color : '#111827'} />,
           tabBarAccessibilityLabel: 'Home',
         }}
       />
       <Tabs.Screen
         name="offers"
         options={{
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24, color }}>{color === '#111827' ? '🎁' : '🎁'}</Text>,
+          tabBarIcon: ({ color, size }) => <Ionicons name="pricetag" size={size} color={typeof color === 'string' ? color : '#111827'} />,
           tabBarAccessibilityLabel: 'Oferta',
         }}
       />
       <Tabs.Screen
         name="cart"
         options={{
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24, color }}>{color === '#111827' ? '🛒' : '🛒'}</Text>,
+          tabBarIcon: ({ color, size }) => <Ionicons name="cart" size={size} color={typeof color === 'string' ? color : '#111827'} />,
           tabBarBadge: itemCount > 0 ? itemCount : undefined,
           tabBarBadgeStyle: { backgroundColor: '#EE6C3A', color: '#fff' },
           tabBarAccessibilityLabel: 'Shporta',
@@ -58,7 +58,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24, color }}>{color === '#111827' ? '👤' : '👤'}</Text>,
+          tabBarIcon: ({ color, size }) => <Ionicons name="person" size={size} color={typeof color === 'string' ? color : '#111827'} />,
           tabBarAccessibilityLabel: 'Profili',
         }}
       />

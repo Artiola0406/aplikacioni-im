@@ -1,16 +1,29 @@
 import { router } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 
 import QuantityStepper from '@/components/QuantityStepper';
-import { formatMoney } from '@/data/restaurants';
+import GjendjaBosh from '@/components/GjendjaBosh';
+import { formatMoney, restaurants } from '@/data/restaurants';
 import { useCart } from '@/context/cart-context';
 
 export default function CartScreen() {
   const { items, updateQuantity, removeItem, subtotalCents } = useCart();
   const deliveryFeeCents = 300;
   const totalCents = subtotalCents + deliveryFeeCents;
+  const restaurantName = restaurants.find(item => item.id === items[0]?.restaurantId)?.name;
+
+  const confirmRemove = (itemId: string) => {
+    Alert.alert(
+      'Je i sigurt?',
+      'Dëshironi ta hiqni këtë artikull nga shporta?',
+      [
+        { text: 'Anulo', style: 'cancel' },
+        { text: 'Hiqe', style: 'destructive', onPress: () => removeItem(itemId) },
+      ]
+    );
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -22,14 +35,16 @@ export default function CartScreen() {
 
       <ScrollView contentContainerStyle={styles.content}>
         {items.length === 0 ? (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyText}>Shporta është bosh.</Text>
-            <Pressable style={styles.emptyButton} onPress={() => router.push('/(tabs)/home')}>
-              <Text style={styles.emptyButtonText}>Shfleto restorantet</Text>
-            </Pressable>
-          </View>
+          <GjendjaBosh
+            icon="cart-outline"
+            title="Shporta është bosh"
+            description="Shtoni ushqim nga restorantet pranë jush."
+            buttonText="Shfleto restorantet"
+            onPress={() => router.push('/(tabs)/home')}
+          />
         ) : (
           <>
+            {restaurantName ? <Text style={styles.restaurantName}>{restaurantName}</Text> : null}
             {items.map(item => (
               <View key={item.id} style={styles.itemRow}>
                 <Image source={{ uri: item.image }} style={styles.image} contentFit="cover" />
@@ -42,7 +57,7 @@ export default function CartScreen() {
                       onDecrement={() => updateQuantity(item.id, -1)}
                       onIncrement={() => updateQuantity(item.id, 1)}
                     />
-                    <Pressable onPress={() => removeItem(item.id)}>
+                    <Pressable onPress={() => confirmRemove(item.id)}>
                       <Text style={styles.remove}>Hiqe</Text>
                     </Pressable>
                   </View>
@@ -63,7 +78,7 @@ export default function CartScreen() {
         <View style={styles.bottomBar}>
           <Text style={styles.bottomTotal}>{formatMoney(totalCents)}</Text>
           <Pressable onPress={() => router.push('/checkout')} style={styles.button}>
-            <Text style={styles.buttonText}>Vazhdo →</Text>
+            <Text style={styles.buttonText}>Vazhdo me porosinë</Text>
           </Pressable>
         </View>
       ) : null}
@@ -79,6 +94,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 22, fontWeight: '800', color: '#111827' },
   spacer: { width: 36 },
   content: { padding: 18, paddingBottom: 120 },
+  restaurantName: { fontSize: 20, fontWeight: '800', color: '#111827', marginBottom: 12 },
   emptyState: { backgroundColor: '#fff', borderRadius: 20, padding: 28, alignItems: 'center', marginTop: 80 },
   emptyText: { color: '#111827', fontSize: 18, marginBottom: 16 },
   emptyButton: { backgroundColor: '#111827', borderRadius: 999, paddingHorizontal: 18, paddingVertical: 12 },

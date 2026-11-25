@@ -4,7 +4,7 @@ export const restaurants: Restaurant[] = [
   {
     id: 'pizza-mojo',
     name: 'Pizza Mojo',
-    cuisine: ['Pica', 'Italiana'],
+    cuisine: ['Pizza', 'Italiana'],
     rating: 4.8,
     reviews: 1246,
     etaMinutes: '15-20 min',
@@ -21,7 +21,7 @@ export const restaurants: Restaurant[] = [
         name: 'Pizza Klasike',
         description: 'Salcë domate, mozzarella, basilik dhe vaj ulliri.',
         priceCents: 690,
-        category: 'Pica klasike',
+        category: 'Pizza klasike',
         image:
           'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=80',
         tag: 'Popullore',
@@ -31,7 +31,7 @@ export const restaurants: Restaurant[] = [
         name: 'Pizza Speciale',
         description: 'Muzdaga, proshutë, qepë, kaper, dhe djath.',
         priceCents: 840,
-        category: 'Pica speciale',
+        category: 'Pizza speciale',
         image:
           'https://images.unsplash.com/photo-1548365328-9f547fb9587c?auto=format&fit=crop&w=700&q=80',
         tag: 'Më e kërkuar',
@@ -103,7 +103,7 @@ export const restaurants: Restaurant[] = [
   {
     id: 'burger-bistro',
     name: 'Burger Bistro',
-    cuisine: ['Burger', 'American'],
+    cuisine: ['Burger', 'Amerikane'],
     rating: 4.7,
     reviews: 760,
     etaMinutes: '12-18 min',
